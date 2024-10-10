@@ -38,7 +38,7 @@ class _PageSaveSucessWidgetState extends State<PageSaveSucessWidget> {
         ),
       );
       _model.pessoaLogadaSucess = _model.pessoa?.first;
-      setState(() {});
+      safeSetState(() {});
       await Future.delayed(const Duration(milliseconds: 3000));
 
       context.pushNamed(
@@ -52,7 +52,7 @@ class _PageSaveSucessWidgetState extends State<PageSaveSucessWidget> {
       );
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -64,82 +64,49 @@ class _PageSaveSucessWidgetState extends State<PageSaveSucessWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<PessoaRow>>(
-      future: PessoaTable().querySingleRow(
-        queryFn: (q) => q.eq(
-          'idUsuario',
-          currentUserUid,
-        ),
-      ),
-      builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
-        if (!snapshot.hasData) {
-          return Scaffold(
-            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-            body: Center(
-              child: SizedBox(
-                width: 50.0,
-                height: 50.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    FlutterFlowTheme.of(context).primary,
-                  ),
-                ),
-              ),
-            ),
-          );
-        }
-        List<PessoaRow> pageSaveSucessPessoaRowList = snapshot.data!;
-
-        final pageSaveSucessPessoaRow = pageSaveSucessPessoaRowList.isNotEmpty
-            ? pageSaveSucessPessoaRowList.first
-            : null;
-
-        return GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Scaffold(
-            key: scaffoldKey,
-            backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
-            body: SafeArea(
-              top: true,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+        body: SafeArea(
+          top: true,
+          child: Align(
+            alignment: AlignmentDirectional(0.0, 0.0),
+            child: Container(
+              width: 300.0,
+              height: 700.0,
+              decoration: BoxDecoration(),
               child: Align(
                 alignment: AlignmentDirectional(0.0, 0.0),
-                child: Container(
-                  width: 300.0,
-                  height: 700.0,
-                  decoration: BoxDecoration(),
-                  child: Align(
-                    alignment: AlignmentDirectional(0.0, 0.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Align(
-                            alignment: AlignmentDirectional(0.0, -1.0),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  20.0, 50.0, 20.0, 0.0),
-                              child: Lottie.asset(
-                                'assets/lottie_animations/Animation_-_1723728001878.json',
-                                width: 200.0,
-                                height: 180.0,
-                                fit: BoxFit.contain,
-                                repeat: false,
-                                animate: true,
-                              ),
-                            ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: AlignmentDirectional(0.0, -1.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              20.0, 50.0, 20.0, 0.0),
+                          child: Lottie.asset(
+                            'assets/lottie_animations/Animation_-_1723728001878.json',
+                            width: 200.0,
+                            height: 180.0,
+                            fit: BoxFit.contain,
+                            repeat: false,
+                            animate: true,
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

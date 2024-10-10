@@ -1,7 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
-import '/components/editar_pratica_diaria_widget.dart';
 import '/components/exibir_vazio_tabela_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_data_table.dart';
@@ -11,8 +10,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:math';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'dart:async';
-import 'package:aligned_tooltip/aligned_tooltip.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -52,10 +49,14 @@ class _PraticasPorDiaWidgetState extends State<PraticasPorDiaWidget>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.dataTypeMaioresValores = [];
-      setState(() {});
-      _model.resumoMelhoresDias = await GetListaMaiorValoresDiaCall.call(
-        dias: 31,
-        idPessoa: widget!.paramPessoaLogado?.id,
+      safeSetState(() {});
+      _model.resumoMelhoresDias = await ResumoMelhoresPraticasCall.call(
+        idpessoa: valueOrDefault<String>(
+          widget!.paramPessoaLogado?.id,
+          '0',
+        ),
+        ano: functions.anoNumero(getCurrentTimestamp),
+        agrupamento: 'dia',
       );
 
       if ((_model.resumoMelhoresDias?.succeeded ?? true)) {
@@ -67,7 +68,7 @@ class _PraticasPorDiaWidgetState extends State<PraticasPorDiaWidget>
                 .withoutNulls
                 .toList()
                 .cast<MaiorValorDiaStruct>();
-        setState(() {});
+        safeSetState(() {});
       }
     });
 
@@ -118,7 +119,7 @@ class _PraticasPorDiaWidgetState extends State<PraticasPorDiaWidget>
       this,
     );
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -131,21 +132,19 @@ class _PraticasPorDiaWidgetState extends State<PraticasPorDiaWidget>
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<DiarioRow>>(
-      future: (_model.requestCompleter ??= Completer<List<DiarioRow>>()
-            ..complete(DiarioTable().queryRows(
-              queryFn: (q) => q
-                  .eq(
-                    'idPessoa',
-                    widget!.paramPessoaLogado?.id,
-                  )
-                  .gte(
-                    'data',
-                    supaSerialize<DateTime>(
-                        functions.ultimosDias(31, getCurrentTimestamp)),
-                  )
-                  .order('data'),
-            )))
-          .future,
+      future: DiarioTable().queryRows(
+        queryFn: (q) => q
+            .eq(
+              'idPessoa',
+              widget!.paramPessoaLogado?.id,
+            )
+            .gte(
+              'data',
+              supaSerialize<DateTime>(
+                  functions.ultimosDias(31, getCurrentTimestamp)),
+            )
+            .order('data'),
+      ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -192,7 +191,7 @@ class _PraticasPorDiaWidgetState extends State<PraticasPorDiaWidget>
                               ),
                     ),
                     Text(
-                      'visualize seu desempenho',
+                      'visualize seu desempenho por dia',
                       style: FlutterFlowTheme.of(context).labelMedium.override(
                             fontFamily: 'Readex Pro',
                             color: FlutterFlowTheme.of(context)
@@ -1171,7 +1170,7 @@ class _PraticasPorDiaWidgetState extends State<PraticasPorDiaWidget>
                         padding: EdgeInsetsDirectional.fromSTEB(
                             16.0, 4.0, 16.0, 8.0),
                         child: Text(
-                          'Práticas por dia (últimos 30 dias)',
+                          'PRÁTICAS POR DIA  (últimos 30 dias)',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Readex Pro',
@@ -1196,31 +1195,6 @@ class _PraticasPorDiaWidgetState extends State<PraticasPorDiaWidget>
                             controller: _model.paginatedDataTableController,
                             data: listaPraticas,
                             columnsBuilder: (onSortChanged) => [
-                              DataColumn2(
-                                label: DefaultTextStyle.merge(
-                                  softWrap: true,
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                letterSpacing: 0.0,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                fixedWidth: 70.0,
-                              ),
                               DataColumn2(
                                 label: DefaultTextStyle.merge(
                                   softWrap: true,
@@ -1425,256 +1399,6 @@ class _PraticasPorDiaWidgetState extends State<PraticasPorDiaWidget>
                                         .primaryBackground,
                               ),
                               cells: [
-                                Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      AlignedTooltip(
-                                        content: Padding(
-                                          padding: EdgeInsets.all(4.0),
-                                          child: Text(
-                                            'Editar a prática do dia ${dateTimeFormat(
-                                              "d/M",
-                                              listaPraticasItem.dataField,
-                                              locale:
-                                                  FFLocalizations.of(context)
-                                                      .languageCode,
-                                            )}',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                        offset: 4.0,
-                                        preferredDirection: AxisDirection.down,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                        elevation: 4.0,
-                                        tailBaseWidth: 24.0,
-                                        tailLength: 12.0,
-                                        waitDuration:
-                                            Duration(milliseconds: 100),
-                                        showDuration:
-                                            Duration(milliseconds: 1500),
-                                        triggerMode: TooltipTriggerMode.tap,
-                                        child: InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            await showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              backgroundColor:
-                                                  Color(0xAA000000),
-                                              enableDrag: false,
-                                              useSafeArea: true,
-                                              context: context,
-                                              builder: (context) {
-                                                return GestureDetector(
-                                                  onTap: () =>
-                                                      FocusScope.of(context)
-                                                          .unfocus(),
-                                                  child: Padding(
-                                                    padding:
-                                                        MediaQuery.viewInsetsOf(
-                                                            context),
-                                                    child: Container(
-                                                      height: 800.0,
-                                                      child:
-                                                          EditarPraticaDiariaWidget(
-                                                        pessoaLogada: widget!
-                                                            .paramPessoaLogado!,
-                                                        rowDiario:
-                                                            listaPraticasItem,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ).then(
-                                                (value) => safeSetState(() {}));
-                                          },
-                                          child: FaIcon(
-                                            FontAwesomeIcons.edit,
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            size: 24.0,
-                                          ),
-                                        ),
-                                      ),
-                                      AlignedTooltip(
-                                        content: Padding(
-                                          padding: EdgeInsets.all(4.0),
-                                          child: Text(
-                                            'Deletar a prática do dia ${dateTimeFormat(
-                                              "d/M",
-                                              listaPraticasItem.dataField,
-                                              locale:
-                                                  FFLocalizations.of(context)
-                                                      .languageCode,
-                                            )}',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
-                                                  letterSpacing: 0.0,
-                                                ),
-                                          ),
-                                        ),
-                                        offset: 4.0,
-                                        preferredDirection: AxisDirection.down,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                        elevation: 4.0,
-                                        tailBaseWidth: 24.0,
-                                        tailLength: 12.0,
-                                        waitDuration:
-                                            Duration(milliseconds: 100),
-                                        showDuration:
-                                            Duration(milliseconds: 1500),
-                                        triggerMode: TooltipTriggerMode.tap,
-                                        child: InkWell(
-                                          splashColor: Colors.transparent,
-                                          focusColor: Colors.transparent,
-                                          hoverColor: Colors.transparent,
-                                          highlightColor: Colors.transparent,
-                                          onTap: () async {
-                                            var _shouldSetState = false;
-                                            var confirmDialogResponse =
-                                                await showDialog<bool>(
-                                                      context: context,
-                                                      builder:
-                                                          (alertDialogContext) {
-                                                        return AlertDialog(
-                                                          title: Text(
-                                                              'Removendo prática diária...'),
-                                                          content: Text(
-                                                              'Deseja realmente excluir a prática diária?'),
-                                                          actions: [
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext,
-                                                                      false),
-                                                              child: Text(
-                                                                  'Cancelar'),
-                                                            ),
-                                                            TextButton(
-                                                              onPressed: () =>
-                                                                  Navigator.pop(
-                                                                      alertDialogContext,
-                                                                      true),
-                                                              child: Text(
-                                                                  'Confirmar'),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    ) ??
-                                                    false;
-                                            if (confirmDialogResponse) {
-                                              _model.praticaDeletada =
-                                                  await DiarioTable().delete(
-                                                matchingRows: (rows) => rows.eq(
-                                                  'id',
-                                                  listaPraticasItem.id,
-                                                ),
-                                                returnRows: true,
-                                              );
-                                              _shouldSetState = true;
-                                            } else {
-                                              if (_shouldSetState)
-                                                setState(() {});
-                                              return;
-                                            }
-
-                                            setState(() =>
-                                                _model.requestCompleter = null);
-                                            await _model
-                                                .waitForRequestCompleted(
-                                                    minWait: 100);
-                                            _model.saidaApi =
-                                                await GetListaMaiorValoresDiaCall
-                                                    .call(
-                                              dias: 31,
-                                              idPessoa:
-                                                  widget!.paramPessoaLogado?.id,
-                                            );
-
-                                            _shouldSetState = true;
-                                            _model
-                                                .dataTypeMaioresValores = ((_model
-                                                                .saidaApi
-                                                                ?.jsonBody ??
-                                                            '')
-                                                        .toList()
-                                                        .map<MaiorValorDiaStruct?>(
-                                                            MaiorValorDiaStruct
-                                                                .maybeFromMap)
-                                                        .toList()
-                                                    as Iterable<
-                                                        MaiorValorDiaStruct?>)
-                                                .withoutNulls
-                                                .toList()
-                                                .cast<MaiorValorDiaStruct>();
-                                            setState(() {});
-                                            setState(() =>
-                                                _model.requestCompleter = null);
-                                            await _model
-                                                .waitForRequestCompleted();
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                content: Text(
-                                                  'Prática excluída!',
-                                                  style: TextStyle(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primaryText,
-                                                  ),
-                                                ),
-                                                duration: Duration(
-                                                    milliseconds: 4000),
-                                                backgroundColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                              ),
-                                            );
-                                            if (_shouldSetState)
-                                              setState(() {});
-                                          },
-                                          child: FaIcon(
-                                            FontAwesomeIcons.trashAlt,
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
-                                            size: 24.0,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.center,

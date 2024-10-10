@@ -48,8 +48,12 @@ class HomePageModel extends FlutterFlowModel<HomePageWidget> {
 
   // Stores action output result for [Backend Call - Query Rows] action in HomePage widget.
   List<PessoaRow>? pessoa;
-  // Stores action output result for [Backend Call - API (get lista maior valores dia)] action in ListTile widget.
+  // Stores action output result for [Backend Call - API (resumoMelhoresPraticas)] action in ListTile widget.
   ApiCallResponse? resumoMelhoresDias;
+  // Stores action output result for [Backend Call - API (resumoMelhoresPraticas)] action in ListTile widget.
+  ApiCallResponse? resumoMelhorSemana;
+  // Stores action output result for [Backend Call - API (resumoMelhoresPraticas)] action in ListTile widget.
+  ApiCallResponse? resumoMelhorMes;
 
   @override
   void initState(BuildContext context) {}

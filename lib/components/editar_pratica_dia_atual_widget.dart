@@ -1,4 +1,3 @@
-import '/backend/api_requests/api_calls.dart';
 import '/backend/schema/structs/index.dart';
 import '/backend/supabase/supabase.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -48,29 +47,29 @@ class _EditarPraticaDiaAtualWidgetState
     _model = createModel(context, () => EditarPraticaDiaAtualModel());
 
     _model.txtDataPraticaFocusNode ??= FocusNode();
-    _model.txtDataPraticaFocusNode!.addListener(() => setState(() {}));
+    _model.txtDataPraticaFocusNode!.addListener(() => safeSetState(() {}));
 
     _model.txtOracaoFocusNode ??= FocusNode();
-    _model.txtOracaoFocusNode!.addListener(() => setState(() {}));
+    _model.txtOracaoFocusNode!.addListener(() => safeSetState(() {}));
 
     _model.txtJohreiFocusNode ??= FocusNode();
-    _model.txtJohreiFocusNode!.addListener(() => setState(() {}));
+    _model.txtJohreiFocusNode!.addListener(() => safeSetState(() {}));
 
     _model.txtEnsinamentoFocusNode ??= FocusNode();
-    _model.txtEnsinamentoFocusNode!.addListener(() => setState(() {}));
+    _model.txtEnsinamentoFocusNode!.addListener(() => safeSetState(() {}));
 
     _model.txtDonativoFocusNode ??= FocusNode();
-    _model.txtDonativoFocusNode!.addListener(() => setState(() {}));
+    _model.txtDonativoFocusNode!.addListener(() => safeSetState(() {}));
 
     _model.txtDedicacaoFocusNode ??= FocusNode();
-    _model.txtDedicacaoFocusNode!.addListener(() => setState(() {}));
+    _model.txtDedicacaoFocusNode!.addListener(() => safeSetState(() {}));
 
     _model.txtEncaminhamentoFocusNode ??= FocusNode();
-    _model.txtEncaminhamentoFocusNode!.addListener(() => setState(() {}));
+    _model.txtEncaminhamentoFocusNode!.addListener(() => safeSetState(() {}));
 
     _model.txtRelatoFocusNode ??= FocusNode();
-    _model.txtRelatoFocusNode!.addListener(() => setState(() {}));
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    _model.txtRelatoFocusNode!.addListener(() => safeSetState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -237,7 +236,8 @@ class _EditarPraticaDiaAtualWidgetState
                                                           '_model.txtDataPraticaTextController',
                                                           Duration(
                                                               milliseconds: 10),
-                                                          () => setState(() {}),
+                                                          () => safeSetState(
+                                                              () {}),
                                                         ),
                                                         autofocus: false,
                                                         textCapitalization:
@@ -401,7 +401,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                   EasyDebounce.debounce(
                                                 '_model.txtOracaoTextController',
                                                 Duration(milliseconds: 0),
-                                                () => setState(() {}),
+                                                () => safeSetState(() {}),
                                               ),
                                               autofocus: true,
                                               textCapitalization:
@@ -502,7 +502,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                           _model
                                                               .txtOracaoTextController
                                                               ?.clear();
-                                                          setState(() {});
+                                                          safeSetState(() {});
                                                         },
                                                         child: Icon(
                                                           Icons.clear,
@@ -548,7 +548,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                   EasyDebounce.debounce(
                                                 '_model.txtJohreiTextController',
                                                 Duration(milliseconds: 0),
-                                                () => setState(() {}),
+                                                () => safeSetState(() {}),
                                               ),
                                               autofocus: true,
                                               textCapitalization:
@@ -651,7 +651,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                           _model
                                                               .txtJohreiTextController
                                                               ?.clear();
-                                                          setState(() {});
+                                                          safeSetState(() {});
                                                         },
                                                         child: Icon(
                                                           Icons.clear,
@@ -698,7 +698,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                   EasyDebounce.debounce(
                                                 '_model.txtEnsinamentoTextController',
                                                 Duration(milliseconds: 0),
-                                                () => setState(() {}),
+                                                () => safeSetState(() {}),
                                               ),
                                               autofocus: true,
                                               textCapitalization:
@@ -799,7 +799,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                           _model
                                                               .txtEnsinamentoTextController
                                                               ?.clear();
-                                                          setState(() {});
+                                                          safeSetState(() {});
                                                         },
                                                         child: Icon(
                                                           Icons.clear,
@@ -864,8 +864,8 @@ class _EditarPraticaDiaAtualWidgetState
                                                             .text),
                                                     0.0,
                                                   );
-                                                  setState(() {});
-                                                  setState(() {
+                                                  safeSetState(() {});
+                                                  safeSetState(() {
                                                     _model.txtDonativoTextController
                                                             ?.text =
                                                         functions.formatCurrency(
@@ -990,8 +990,8 @@ class _EditarPraticaDiaAtualWidgetState
                                                                         .text),
                                                             0.0,
                                                           );
-                                                          setState(() {});
-                                                          setState(() {
+                                                          safeSetState(() {});
+                                                          safeSetState(() {
                                                             _model.txtDonativoTextController
                                                                     ?.text =
                                                                 functions.formatCurrency(
@@ -1006,7 +1006,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                                         .text
                                                                         .length);
                                                           });
-                                                          setState(() {});
+                                                          safeSetState(() {});
                                                         },
                                                         child: Icon(
                                                           Icons.clear,
@@ -1051,7 +1051,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                   EasyDebounce.debounce(
                                                 '_model.txtDedicacaoTextController',
                                                 Duration(milliseconds: 0),
-                                                () => setState(() {}),
+                                                () => safeSetState(() {}),
                                               ),
                                               autofocus: true,
                                               textCapitalization:
@@ -1152,7 +1152,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                           _model
                                                               .txtDedicacaoTextController
                                                               ?.clear();
-                                                          setState(() {});
+                                                          safeSetState(() {});
                                                         },
                                                         child: Icon(
                                                           Icons.clear,
@@ -1199,7 +1199,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                   EasyDebounce.debounce(
                                                 '_model.txtEncaminhamentoTextController',
                                                 Duration(milliseconds: 0),
-                                                () => setState(() {}),
+                                                () => safeSetState(() {}),
                                               ),
                                               autofocus: true,
                                               textCapitalization:
@@ -1299,7 +1299,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                           _model
                                                               .txtEncaminhamentoTextController
                                                               ?.clear();
-                                                          setState(() {});
+                                                          safeSetState(() {});
                                                         },
                                                         child: Icon(
                                                           Icons.clear,
@@ -1363,7 +1363,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                   EasyDebounce.debounce(
                                                 '_model.txtRelatoTextController',
                                                 Duration(milliseconds: 2000),
-                                                () => setState(() {}),
+                                                () => safeSetState(() {}),
                                               ),
                                               autofocus: true,
                                               textCapitalization:
@@ -1465,7 +1465,7 @@ class _EditarPraticaDiaAtualWidgetState
                                                           _model
                                                               .txtRelatoTextController
                                                               ?.clear();
-                                                          setState(() {});
+                                                          safeSetState(() {});
                                                         },
                                                         child: Icon(
                                                           Icons.clear,
@@ -1572,25 +1572,8 @@ class _EditarPraticaDiaAtualWidgetState
                               },
                             );
                           } else {
-                            setState(() => _model.requestCompleter = null);
+                            safeSetState(() => _model.requestCompleter = null);
                             await _model.waitForRequestCompleted(minWait: 1000);
-                            _model.saidaApi =
-                                await GetListaMaiorValoresDiaCall.call(
-                              dias: 31,
-                              idPessoa: widget!.pessoaLogada?.id,
-                            );
-
-                            _model.listaMelhoresDias = ((_model
-                                            .saidaApi?.jsonBody ??
-                                        '')
-                                    .toList()
-                                    .map<MaiorValorDiaStruct?>(
-                                        MaiorValorDiaStruct.maybeFromMap)
-                                    .toList() as Iterable<MaiorValorDiaStruct?>)
-                                .withoutNulls
-                                .toList()
-                                .cast<MaiorValorDiaStruct>();
-                            setState(() {});
                             Navigator.pop(context);
 
                             context.pushNamed(
@@ -1631,7 +1614,7 @@ class _EditarPraticaDiaAtualWidgetState
                             );
                           }
 
-                          setState(() {});
+                          safeSetState(() {});
                         },
                         text: 'Alterar',
                         options: FFButtonOptions(

@@ -15,3 +15,7 @@ export '/pages/page_save_sucess/page_save_sucess_widget.dart'
 export '/pages/configurar_notificacao/configurar_notificacao_widget.dart'
     show ConfigurarNotificacaoWidget;
 export '/testes/testes_widget.dart' show TestesWidget;
+export '/pages/praticas_por_mes/praticas_por_mes_widget.dart'
+    show PraticasPorMesWidget;
+export '/pages/praticas_por_semana/praticas_por_semana_widget.dart'
+    show PraticasPorSemanaWidget;

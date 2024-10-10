@@ -29,7 +29,7 @@ class _ResetarSenhaWidgetState extends State<ResetarSenhaWidget> {
     _model.novaSenhaTextController ??= TextEditingController();
     _model.novaSenhaFocusNode ??= FocusNode();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -198,7 +198,7 @@ class _ResetarSenhaWidgetState extends State<ResetarSenhaWidget> {
                       contentPadding: EdgeInsetsDirectional.fromSTEB(
                           24.0, 24.0, 20.0, 24.0),
                       suffixIcon: InkWell(
-                        onTap: () => setState(
+                        onTap: () => safeSetState(
                           () => _model.novaSenhaVisibility =
                               !_model.novaSenhaVisibility,
                         ),
@@ -266,7 +266,7 @@ class _ResetarSenhaWidgetState extends State<ResetarSenhaWidget> {
                         );
                       }
 
-                      setState(() {});
+                      safeSetState(() {});
                     },
                     text: 'Resetar Senha',
                     options: FFButtonOptions(

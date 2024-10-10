@@ -44,6 +44,8 @@ class HomePageFakeModel extends FlutterFlowModel<HomePageFakeWidget> {
   // Stores action output result for [Custom Action - appVersion] action in HomePageFake widget.
   String? appVersao;
   // Stores action output result for [Backend Call - Query Rows] action in HomePageFake widget.
+  List<VersaoappRow>? ultimaVersao;
+  // Stores action output result for [Backend Call - Query Rows] action in HomePageFake widget.
   List<PessoaRow>? pessoa;
   // Stores action output result for [Backend Call - Query Rows] action in HomePageFake widget.
   List<DiarioRow>? inicialRowDiario;

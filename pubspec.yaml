@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 2.0.0+3
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
@@ -25,7 +25,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  aligned_tooltip: 0.0.1
   app_links: 3.4.1
   app_links_platform_interface: 1.1.0
   auto_size_text: 3.0.0
@@ -38,7 +37,7 @@ dependencies:
   flutter_animate: 4.5.0
   flutter_cache_manager: 3.3.1
   flutter_local_notifications: ^17.2.2
-  font_awesome_flutter: 10.6.0
+  font_awesome_flutter: 10.7.0
   from_css_color: 2.0.0
   functions_client: 1.3.2
   go_router: 12.1.3
@@ -76,9 +75,9 @@ dependencies:
   supabase_flutter: 1.10.24
   timeago: 3.6.1
   timezone: ^0.9.4
-  url_launcher: 6.2.5
-  url_launcher_android: 6.3.0
-  url_launcher_ios: 6.2.5
+  url_launcher: 6.3.0
+  url_launcher_android: 6.3.4
+  url_launcher_ios: 6.3.1
   url_launcher_platform_interface: 2.3.2
   webview_flutter: 4.7.0
   webview_flutter_android: 3.15.0
@@ -89,6 +88,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
 
+  http_parser: any
+ # flutter_web_plugins: any
 dependency_overrides:
   http: 1.2.1
   rxdart: 0.27.7
@@ -111,7 +112,12 @@ flutter_launcher_icons:
   image_path: 'assets/images/app_launcher_icon.png'
   adaptive_icon_background: '#ffffff'
   adaptive_icon_foreground: 'assets/images/adaptive_foreground_icon.png'
-
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/images/app_launcher_icon.png'
+  adaptive_icon_background: '#ffffff'
+  adaptive_icon_foreground: 'assets/images/adaptive_foreground_icon.png'
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -133,6 +139,7 @@ flutter:
     - assets/lottie_animations/
     - assets/rive_animations/
     - assets/pdfs/
+
 
   
   # An image asset can refer to one or more resolution-specific "variants", see

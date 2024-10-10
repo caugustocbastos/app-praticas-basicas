@@ -32,9 +32,18 @@ class _HomePageFakeWidgetState extends State<HomePageFakeWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.appVersao = await actions.appVersion();
+      await Future.wait([
+        Future(() async {
+          _model.appVersao = await actions.appVersion();
+        }),
+        Future(() async {
+          _model.ultimaVersao = await VersaoappTable().queryRows(
+            queryFn: (q) => q,
+          );
+        }),
+      ]);
       FFAppState().appVersao = _model.appVersao!;
-      setState(() {});
+      safeSetState(() {});
       _model.pessoa = await PessoaTable().queryRows(
         queryFn: (q) => q.eq(
           'idUsuario',
@@ -42,7 +51,39 @@ class _HomePageFakeWidgetState extends State<HomePageFakeWidget> {
         ),
       );
       _model.pessoaLogada = _model.pessoa?.first;
-      setState(() {});
+      safeSetState(() {});
+      if ((isWeb == false) &&
+          (_model.appVersao != null && _model.appVersao != '') &&
+          (_model.appVersao !=
+              valueOrDefault<String>(
+                _model.ultimaVersao?.first?.versaoAtual,
+                '0',
+              ))) {
+        var confirmDialogResponse = await showDialog<bool>(
+              context: context,
+              builder: (alertDialogContext) {
+                return AlertDialog(
+                  title: Text('NOVA VERSÃO DISPONÍVEL!'),
+                  content: Text(
+                      'Uma nova versão do aplicativo está disponível. Deseja atualizar agora?'),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(alertDialogContext, false),
+                      child: Text('Cancelar'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.pop(alertDialogContext, true),
+                      child: Text('Confirmar'),
+                    ),
+                  ],
+                );
+              },
+            ) ??
+            false;
+        if (confirmDialogResponse) {
+          await launchURL(FFAppConstants.linkDownloadApp);
+        }
+      }
       _model.inicialRowDiario = await DiarioTable().queryRows(
         queryFn: (q) => q
             .eq(
@@ -97,7 +138,7 @@ class _HomePageFakeWidgetState extends State<HomePageFakeWidget> {
       }
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

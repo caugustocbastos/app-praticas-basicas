@@ -46,8 +46,8 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.dataSelecionada2 = getCurrentTimestamp;
-      setState(() {});
-      setState(() => _model.requestCompleter = null);
+      safeSetState(() {});
+      safeSetState(() => _model.requestCompleter = null);
       await _model.waitForRequestCompleted();
       _model.saidaRowDiarioInicial = await DiarioTable().queryRows(
         queryFn: (q) => q
@@ -64,8 +64,8 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
       if (_model.saidaRowDiarioInicial != null &&
           (_model.saidaRowDiarioInicial)!.isNotEmpty) {
         _model.rowDiario = _model.saidaRowDiarioInicial?.first;
-        setState(() {});
-        setState(() {
+        safeSetState(() {});
+        safeSetState(() {
           _model.txtOracaoTextController?.text = valueOrDefault<String>(
             formatNumber(
               _model.rowDiario?.oracao,
@@ -78,7 +78,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
           _model.txtOracaoTextController?.selection = TextSelection.collapsed(
               offset: _model.txtOracaoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtJohreiTextController?.text = valueOrDefault<String>(
             formatNumber(
               _model.rowDiario?.johrei,
@@ -91,7 +91,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
           _model.txtJohreiTextController?.selection = TextSelection.collapsed(
               offset: _model.txtJohreiTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtEnsinamentoTextController?.text = valueOrDefault<String>(
             formatNumber(
               _model.rowDiario?.ensinamento,
@@ -105,7 +105,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
               TextSelection.collapsed(
                   offset: _model.txtEnsinamentoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtDonativoTextController?.text = valueOrDefault<String>(
             formatNumber(
               _model.rowDiario?.donativo,
@@ -119,7 +119,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
           _model.txtDonativoTextController?.selection = TextSelection.collapsed(
               offset: _model.txtDonativoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtDedicacaoTextController?.text = valueOrDefault<String>(
             formatNumber(
               _model.rowDiario?.dedicacao,
@@ -133,7 +133,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
               TextSelection.collapsed(
                   offset: _model.txtDedicacaoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtEncaminhamentoTextController?.text = valueOrDefault<String>(
             formatNumber(
               _model.rowDiario?.encaminhamento,
@@ -147,7 +147,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
               TextSelection.collapsed(
                   offset: _model.txtEncaminhamentoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtRelatoTextController?.text = _model.rowDiario!.relato!;
           _model.txtRelatoTextController?.selection = TextSelection.collapsed(
               offset: _model.txtRelatoTextController!.text.length);
@@ -156,12 +156,12 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
           _model.rowDiario?.donativo,
           0.0,
         );
-        setState(() {});
+        safeSetState(() {});
         return;
       } else {
         _model.rowDiario = null;
-        setState(() {});
-        setState(() {
+        safeSetState(() {});
+        safeSetState(() {
           _model.txtOracaoTextController?.text = valueOrDefault<String>(
             _model.rowDiario?.oracao.toString(),
             '0',
@@ -169,7 +169,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
           _model.txtOracaoTextController?.selection = TextSelection.collapsed(
               offset: _model.txtOracaoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtJohreiTextController?.text = valueOrDefault<String>(
             _model.rowDiario?.johrei?.toString(),
             '0',
@@ -177,7 +177,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
           _model.txtJohreiTextController?.selection = TextSelection.collapsed(
               offset: _model.txtJohreiTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtEnsinamentoTextController?.text = valueOrDefault<String>(
             _model.rowDiario?.ensinamento?.toString(),
             '0',
@@ -186,12 +186,12 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
               TextSelection.collapsed(
                   offset: _model.txtEnsinamentoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtDonativoTextController?.text = 'R\$0,00';
           _model.txtDonativoTextController?.selection = TextSelection.collapsed(
               offset: _model.txtDonativoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtDedicacaoTextController?.text = valueOrDefault<String>(
             _model.rowDiario?.dedicacao?.toString(),
             '0',
@@ -200,7 +200,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
               TextSelection.collapsed(
                   offset: _model.txtDedicacaoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtEncaminhamentoTextController?.text = valueOrDefault<String>(
             _model.rowDiario?.encaminhamento?.toString(),
             '0',
@@ -209,7 +209,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
               TextSelection.collapsed(
                   offset: _model.txtEncaminhamentoTextController!.text.length);
         });
-        setState(() {
+        safeSetState(() {
           _model.txtRelatoTextController?.text = _model.rowDiario!.relato!;
           _model.txtRelatoTextController?.selection = TextSelection.collapsed(
               offset: _model.txtRelatoTextController!.text.length);
@@ -220,28 +220,28 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
 
     _model.txtDataPraticaTextController ??= TextEditingController();
     _model.txtDataPraticaFocusNode ??= FocusNode();
-    _model.txtDataPraticaFocusNode!.addListener(() => setState(() {}));
+    _model.txtDataPraticaFocusNode!.addListener(() => safeSetState(() {}));
     _model.txtOracaoTextController ??= TextEditingController(
         text: valueOrDefault<String>(
       _model.rowDiario?.oracao.toString(),
       '0',
     ));
     _model.txtOracaoFocusNode ??= FocusNode();
-    _model.txtOracaoFocusNode!.addListener(() => setState(() {}));
+    _model.txtOracaoFocusNode!.addListener(() => safeSetState(() {}));
     _model.txtJohreiTextController ??= TextEditingController(
         text: valueOrDefault<String>(
       _model.rowDiario?.johrei?.toString(),
       '0',
     ));
     _model.txtJohreiFocusNode ??= FocusNode();
-    _model.txtJohreiFocusNode!.addListener(() => setState(() {}));
+    _model.txtJohreiFocusNode!.addListener(() => safeSetState(() {}));
     _model.txtEnsinamentoTextController ??= TextEditingController(
         text: valueOrDefault<String>(
       _model.rowDiario?.ensinamento.toString(),
       '0',
     ));
     _model.txtEnsinamentoFocusNode ??= FocusNode();
-    _model.txtEnsinamentoFocusNode!.addListener(() => setState(() {}));
+    _model.txtEnsinamentoFocusNode!.addListener(() => safeSetState(() {}));
     _model.txtDonativoTextController ??= TextEditingController(
         text: valueOrDefault<String>(
       formatNumber(
@@ -254,26 +254,26 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
       '0',
     ));
     _model.txtDonativoFocusNode ??= FocusNode();
-    _model.txtDonativoFocusNode!.addListener(() => setState(() {}));
+    _model.txtDonativoFocusNode!.addListener(() => safeSetState(() {}));
     _model.txtDedicacaoTextController ??= TextEditingController(
         text: valueOrDefault<String>(
       _model.rowDiario?.dedicacao.toString(),
       '0',
     ));
     _model.txtDedicacaoFocusNode ??= FocusNode();
-    _model.txtDedicacaoFocusNode!.addListener(() => setState(() {}));
+    _model.txtDedicacaoFocusNode!.addListener(() => safeSetState(() {}));
     _model.txtEncaminhamentoTextController ??= TextEditingController(
         text: valueOrDefault<String>(
       _model.rowDiario?.encaminhamento.toString(),
       '0',
     ));
     _model.txtEncaminhamentoFocusNode ??= FocusNode();
-    _model.txtEncaminhamentoFocusNode!.addListener(() => setState(() {}));
+    _model.txtEncaminhamentoFocusNode!.addListener(() => safeSetState(() {}));
     _model.txtRelatoTextController ??=
         TextEditingController(text: _model.rowDiario?.relato);
     _model.txtRelatoFocusNode ??= FocusNode();
-    _model.txtRelatoFocusNode!.addListener(() => setState(() {}));
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {
+    _model.txtRelatoFocusNode!.addListener(() => safeSetState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {
           _model.txtDataPraticaTextController?.text = dateTimeFormat(
             "d/M/y",
             getCurrentTimestamp,
@@ -460,7 +460,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                       '_model.txtDataPraticaTextController',
                                                       Duration(
                                                           milliseconds: 10),
-                                                      () => setState(() {}),
+                                                      () => safeSetState(() {}),
                                                     ),
                                                     autofocus: false,
                                                     textCapitalization:
@@ -696,7 +696,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                       }
                                                       await Future.wait([
                                                         Future(() async {
-                                                          setState(() {
+                                                          safeSetState(() {
                                                             _model.txtDataPraticaTextController
                                                                     ?.text =
                                                                 dateTimeFormat(
@@ -718,7 +718,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                         Future(() async {
                                                           _model.dataSelecionada2 =
                                                               _model.datePicked;
-                                                          setState(() {});
+                                                          safeSetState(() {});
                                                           if (_model
                                                                   .datePicked ==
                                                               null) {
@@ -726,8 +726,8 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                 functions
                                                                     .somenteData(
                                                                         getCurrentTimestamp);
-                                                            setState(() {});
-                                                            setState(() {
+                                                            safeSetState(() {});
+                                                            safeSetState(() {
                                                               _model.txtDataPraticaTextController
                                                                       ?.text =
                                                                   dateTimeFormat(
@@ -775,8 +775,8 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                         _model.rowDiario = _model
                                                             .saidaRowDiarioCalendar
                                                             ?.first;
-                                                        setState(() {});
-                                                        setState(() {
+                                                        safeSetState(() {});
+                                                        safeSetState(() {
                                                           _model.txtOracaoTextController
                                                                   ?.text =
                                                               valueOrDefault<
@@ -800,7 +800,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model.txtJohreiTextController
                                                                   ?.text =
                                                               valueOrDefault<
@@ -824,7 +824,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model.txtEnsinamentoTextController
                                                                   ?.text =
                                                               valueOrDefault<
@@ -848,7 +848,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model.txtDonativoTextController
                                                                   ?.text =
                                                               valueOrDefault<
@@ -874,7 +874,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model.txtDedicacaoTextController
                                                                   ?.text =
                                                               valueOrDefault<
@@ -898,7 +898,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model.txtEncaminhamentoTextController
                                                                   ?.text =
                                                               valueOrDefault<
@@ -922,7 +922,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model.txtRelatoTextController
                                                                   ?.text =
                                                               _model.rowDiario!
@@ -942,11 +942,11 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                               ?.donativo,
                                                           0.0,
                                                         );
-                                                        setState(() {});
+                                                        safeSetState(() {});
                                                       } else {
                                                         _model.rowDiario = null;
-                                                        setState(() {});
-                                                        setState(() {
+                                                        safeSetState(() {});
+                                                        safeSetState(() {
                                                           _model.txtOracaoTextController
                                                                   ?.text =
                                                               valueOrDefault<
@@ -964,7 +964,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model
                                                               .txtJohreiTextController
                                                               ?.text = '0';
@@ -976,7 +976,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model
                                                               .txtEnsinamentoTextController
                                                               ?.text = '0';
@@ -988,7 +988,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model
                                                               .txtDonativoTextController
                                                               ?.text = '0';
@@ -1000,7 +1000,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model
                                                               .txtDedicacaoTextController
                                                               ?.text = '0';
@@ -1012,7 +1012,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model
                                                               .txtEncaminhamentoTextController
                                                               ?.text = '0';
@@ -1024,7 +1024,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                                       .text
                                                                       .length);
                                                         });
-                                                        setState(() {
+                                                        safeSetState(() {
                                                           _model
                                                               .txtRelatoTextController
                                                               ?.text = ' ';
@@ -1038,10 +1038,10 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                         });
                                                         _model.valorMoeda2 =
                                                             0.0;
-                                                        setState(() {});
+                                                        safeSetState(() {});
                                                       }
 
-                                                      setState(() {});
+                                                      safeSetState(() {});
                                                     },
                                                   ),
                                                 ),
@@ -1084,7 +1084,8 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                         '_model.txtOracaoTextController',
                                                         Duration(
                                                             milliseconds: 0),
-                                                        () => setState(() {}),
+                                                        () =>
+                                                            safeSetState(() {}),
                                                       ),
                                                       autofocus: false,
                                                       textCapitalization:
@@ -1230,7 +1231,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                     children: [
                                                       FFButtonWidget(
                                                         onPressed: () async {
-                                                          setState(() {
+                                                          safeSetState(() {
                                                             _model.txtOracaoTextController
                                                                     ?.text =
                                                                 valueOrDefault<
@@ -1298,7 +1299,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                       ),
                                                       FFButtonWidget(
                                                         onPressed: () async {
-                                                          setState(() {
+                                                          safeSetState(() {
                                                             _model.txtOracaoTextController
                                                                     ?.text =
                                                                 valueOrDefault<
@@ -1405,7 +1406,8 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                         '_model.txtJohreiTextController',
                                                         Duration(
                                                             milliseconds: 0),
-                                                        () => setState(() {}),
+                                                        () =>
+                                                            safeSetState(() {}),
                                                       ),
                                                       autofocus: false,
                                                       textCapitalization:
@@ -1555,7 +1557,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                     children: [
                                                       FFButtonWidget(
                                                         onPressed: () async {
-                                                          setState(() {
+                                                          safeSetState(() {
                                                             _model.txtJohreiTextController
                                                                     ?.text =
                                                                 valueOrDefault<
@@ -1623,7 +1625,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                       ),
                                                       FFButtonWidget(
                                                         onPressed: () async {
-                                                          setState(() {
+                                                          safeSetState(() {
                                                             _model.txtJohreiTextController
                                                                     ?.text =
                                                                 valueOrDefault<
@@ -1703,7 +1705,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                 EasyDebounce.debounce(
                                               '_model.txtEnsinamentoTextController',
                                               Duration(milliseconds: 0),
-                                              () => setState(() {}),
+                                              () => safeSetState(() {}),
                                             ),
                                             autofocus: false,
                                             textCapitalization:
@@ -1828,8 +1830,8 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                   )),
                                                   0.0,
                                                 );
-                                                setState(() {});
-                                                setState(() {
+                                                safeSetState(() {});
+                                                safeSetState(() {
                                                   _model.txtDonativoTextController
                                                           ?.text =
                                                       functions.formatCurrency(
@@ -1955,7 +1957,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                 EasyDebounce.debounce(
                                               '_model.txtDedicacaoTextController',
                                               Duration(milliseconds: 0),
-                                              () => setState(() {}),
+                                              () => safeSetState(() {}),
                                             ),
                                             autofocus: false,
                                             textCapitalization:
@@ -2095,7 +2097,8 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                         '_model.txtEncaminhamentoTextController',
                                                         Duration(
                                                             milliseconds: 0),
-                                                        () => setState(() {}),
+                                                        () =>
+                                                            safeSetState(() {}),
                                                       ),
                                                       autofocus: false,
                                                       textCapitalization:
@@ -2241,7 +2244,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                     children: [
                                                       FFButtonWidget(
                                                         onPressed: () async {
-                                                          setState(() {
+                                                          safeSetState(() {
                                                             _model.txtEncaminhamentoTextController
                                                                     ?.text =
                                                                 valueOrDefault<
@@ -2309,7 +2312,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                       ),
                                                       FFButtonWidget(
                                                         onPressed: () async {
-                                                          setState(() {
+                                                          safeSetState(() {
                                                             _model.txtEncaminhamentoTextController
                                                                     ?.text =
                                                                 functions.incrementaValorTextField(
@@ -2400,7 +2403,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                 EasyDebounce.debounce(
                                               '_model.txtRelatoTextController',
                                               Duration(milliseconds: 2000),
-                                              () => setState(() {}),
+                                              () => safeSetState(() {}),
                                             ),
                                             autofocus: false,
                                             textCapitalization:
@@ -2495,7 +2498,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                                         _model
                                                             .txtRelatoTextController
                                                             ?.clear();
-                                                        setState(() {});
+                                                        safeSetState(() {});
                                                       },
                                                       child: Icon(
                                                         Icons.clear,
@@ -2597,7 +2600,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                   _shouldSetState = true;
                                   await Future.delayed(
                                       const Duration(milliseconds: 2000));
-                                  setState(
+                                  safeSetState(
                                       () => _model.requestCompleter = null);
                                   await _model.waitForRequestCompleted();
                                   if (_model.erroInserir!) {
@@ -2619,16 +2622,16 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
 
                                     context.pushNamed('PageSaveSucess');
 
-                                    if (_shouldSetState) setState(() {});
+                                    if (_shouldSetState) safeSetState(() {});
                                     return;
                                   } else {
                                     context.pushNamed('PageSaveSucess');
 
-                                    if (_shouldSetState) setState(() {});
+                                    if (_shouldSetState) safeSetState(() {});
                                     return;
                                   }
 
-                                  if (_shouldSetState) setState(() {});
+                                  if (_shouldSetState) safeSetState(() {});
                                 },
                                 text: 'Salvar',
                                 options: FFButtonOptions(
@@ -2710,7 +2713,7 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                     },
                                   );
                                   _shouldSetState = true;
-                                  setState(
+                                  safeSetState(
                                       () => _model.requestCompleter = null);
                                   await _model.waitForRequestCompleted();
                                   if (_model.erroUpdateCopy!) {
@@ -2730,23 +2733,23 @@ class _AdicionarPraticasWidgetState extends State<AdicionarPraticasWidget> {
                                       },
                                     );
                                     _model.rowDiario = null;
-                                    setState(() {});
+                                    safeSetState(() {});
 
                                     context.pushNamed('PageSaveSucess');
 
-                                    if (_shouldSetState) setState(() {});
+                                    if (_shouldSetState) safeSetState(() {});
                                     return;
                                   } else {
                                     _model.rowDiario = null;
-                                    setState(() {});
+                                    safeSetState(() {});
 
                                     context.pushNamed('PageSaveSucess');
 
-                                    if (_shouldSetState) setState(() {});
+                                    if (_shouldSetState) safeSetState(() {});
                                     return;
                                   }
 
-                                  if (_shouldSetState) setState(() {});
+                                  if (_shouldSetState) safeSetState(() {});
                                 },
                                 text: 'Alterar',
                                 options: FFButtonOptions(

@@ -170,6 +170,40 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'testes',
           path: '/testes',
           builder: (context, params) => TestesWidget(),
+        ),
+        FFRoute(
+          name: 'PraticasPorMes',
+          path: '/praticasPorMes',
+          requireAuth: true,
+          builder: (context, params) => PraticasPorMesWidget(
+            paramPessoaLogado: params.getParam<PessoaRow>(
+              'paramPessoaLogado',
+              ParamType.SupabaseRow,
+            ),
+            listaMelhoresDias: params.getParam<MaiorValorDiaStruct>(
+              'listaMelhoresDias',
+              ParamType.DataStruct,
+              isList: true,
+              structBuilder: MaiorValorDiaStruct.fromSerializableMap,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: 'PraticasPorSemana',
+          path: '/praticasPorSemana',
+          requireAuth: true,
+          builder: (context, params) => PraticasPorSemanaWidget(
+            paramPessoaLogado: params.getParam<PessoaRow>(
+              'paramPessoaLogado',
+              ParamType.SupabaseRow,
+            ),
+            listaMelhoresDias: params.getParam<MaiorValorDiaStruct>(
+              'listaMelhoresDias',
+              ParamType.DataStruct,
+              isList: true,
+              structBuilder: MaiorValorDiaStruct.fromSerializableMap,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

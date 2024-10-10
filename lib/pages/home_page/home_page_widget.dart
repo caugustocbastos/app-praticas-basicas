@@ -47,7 +47,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
         ),
       );
       _model.pessoaLogada = _model.pessoa?.first;
-      setState(() {});
+      safeSetState(() {});
     });
 
     animationsMap.addAll({
@@ -113,7 +113,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
       ),
     });
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -373,10 +373,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                       highlightColor: Colors.transparent,
                                       onTap: () async {
                                         _model.resumoMelhoresDias =
-                                            await GetListaMaiorValoresDiaCall
+                                            await ResumoMelhoresPraticasCall
                                                 .call(
-                                          dias: 31,
-                                          idPessoa: homePagePessoaRow?.id,
+                                          idpessoa: homePagePessoaRow?.id,
+                                          ano: functions
+                                              .anoNumero(getCurrentTimestamp),
+                                          agrupamento: 'dia',
                                         );
 
                                         _model.listaMelhoresDias = ((_model
@@ -393,7 +395,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                             .withoutNulls
                                             .toList()
                                             .cast<MaiorValorDiaStruct>();
-                                        setState(() {});
+                                        safeSetState(() {});
 
                                         context.pushNamed(
                                           'PraticasPorDia',
@@ -412,7 +414,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
                                         Navigator.pop(context);
 
-                                        setState(() {});
+                                        safeSetState(() {});
                                       },
                                       child: ListTile(
                                         leading: Icon(
@@ -422,7 +424,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                           size: 40.0,
                                         ),
                                         title: Text(
-                                          'Minhas Práticas',
+                                          'Práticas Diárias',
                                           style: FlutterFlowTheme.of(context)
                                               .titleLarge
                                               .override(
@@ -431,7 +433,167 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               ),
                                         ),
                                         subtitle: Text(
-                                          'Visualizar práticas do dia',
+                                          'Visualizar por dia',
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                        tileColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        dense: false,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        _model.resumoMelhorSemana =
+                                            await ResumoMelhoresPraticasCall
+                                                .call(
+                                          idpessoa: homePagePessoaRow?.id,
+                                          ano: functions
+                                              .anoNumero(getCurrentTimestamp),
+                                          agrupamento: 'semana',
+                                        );
+
+                                        _model.listaMelhoresDias = ((_model
+                                                            .resumoMelhorSemana
+                                                            ?.jsonBody ??
+                                                        '')
+                                                    .toList()
+                                                    .map<MaiorValorDiaStruct?>(
+                                                        MaiorValorDiaStruct
+                                                            .maybeFromMap)
+                                                    .toList()
+                                                as Iterable<
+                                                    MaiorValorDiaStruct?>)
+                                            .withoutNulls
+                                            .toList()
+                                            .cast<MaiorValorDiaStruct>();
+                                        safeSetState(() {});
+
+                                        context.pushNamed(
+                                          'PraticasPorSemana',
+                                          queryParameters: {
+                                            'paramPessoaLogado': serializeParam(
+                                              homePagePessoaRow,
+                                              ParamType.SupabaseRow,
+                                            ),
+                                            'listaMelhoresDias': serializeParam(
+                                              _model.listaMelhoresDias,
+                                              ParamType.DataStruct,
+                                              isList: true,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+
+                                        Navigator.pop(context);
+
+                                        safeSetState(() {});
+                                      },
+                                      child: ListTile(
+                                        leading: Icon(
+                                          Icons.calendar_view_week_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 40.0,
+                                        ),
+                                        title: Text(
+                                          'Práticas Semanais',
+                                          style: FlutterFlowTheme.of(context)
+                                              .titleLarge
+                                              .override(
+                                                fontFamily: 'Outfit',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                        subtitle: Text(
+                                          'Visualizar por semana',
+                                          style: FlutterFlowTheme.of(context)
+                                              .labelMedium
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                        tileColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        dense: false,
+                                      ),
+                                    ),
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        _model.resumoMelhorMes =
+                                            await ResumoMelhoresPraticasCall
+                                                .call(
+                                          idpessoa: homePagePessoaRow?.id,
+                                          ano: functions
+                                              .anoNumero(getCurrentTimestamp),
+                                          agrupamento: 'mes',
+                                        );
+
+                                        _model.listaMelhoresDias = ((_model
+                                                            .resumoMelhorMes
+                                                            ?.jsonBody ??
+                                                        '')
+                                                    .toList()
+                                                    .map<MaiorValorDiaStruct?>(
+                                                        MaiorValorDiaStruct
+                                                            .maybeFromMap)
+                                                    .toList()
+                                                as Iterable<
+                                                    MaiorValorDiaStruct?>)
+                                            .withoutNulls
+                                            .toList()
+                                            .cast<MaiorValorDiaStruct>();
+                                        safeSetState(() {});
+
+                                        context.pushNamed(
+                                          'PraticasPorMes',
+                                          queryParameters: {
+                                            'paramPessoaLogado': serializeParam(
+                                              homePagePessoaRow,
+                                              ParamType.SupabaseRow,
+                                            ),
+                                            'listaMelhoresDias': serializeParam(
+                                              _model.listaMelhoresDias,
+                                              ParamType.DataStruct,
+                                              isList: true,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+
+                                        Navigator.pop(context);
+
+                                        safeSetState(() {});
+                                      },
+                                      child: ListTile(
+                                        leading: Icon(
+                                          Icons.calendar_month_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          size: 40.0,
+                                        ),
+                                        title: Text(
+                                          'Práticas Mensais',
+                                          style: FlutterFlowTheme.of(context)
+                                              .titleLarge
+                                              .override(
+                                                fontFamily: 'Outfit',
+                                                letterSpacing: 0.0,
+                                              ),
+                                        ),
+                                        subtitle: Text(
+                                          'Visualizar por mês',
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium
                                               .override(

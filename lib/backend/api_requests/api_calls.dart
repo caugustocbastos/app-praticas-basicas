@@ -45,24 +45,26 @@ class BuscarMaiorValorNoIntervaloDiasCall {
   }
 }
 
-class GetListaMaiorValoresDiaCall {
+class ResumoMelhoresPraticasCall {
   static Future<ApiCallResponse> call({
-    int? dias,
-    String? idPessoa = '',
+    String? idpessoa = '',
+    int? ano,
+    String? agrupamento = '',
   }) async {
     final ffApiRequestBody = '''
 {
-  "input_dias": "${dias}",
-  "input_idpessoa": "${idPessoa}"
+  "input_idpessoa": "${idpessoa}",
+  "input_ano": "${ano}",
+  "tipo_agrupamento": "${agrupamento}"
 }''';
     return ApiManager.instance.makeApiCall(
-      callName: 'get lista maior valores dia',
+      callName: 'resumoMelhoresPraticas',
       apiUrl:
-          'https://ryunukvapablhewsjmwb.supabase.co/rest/v1/rpc/get_lista_maior_valores_dia',
+          'https://ryunukvapablhewsjmwb.supabase.co/rest/v1/rpc/resumo_diario',
       callType: ApiCallType.POST,
       headers: {
         'apikey':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dW51a3ZhcGFibGhld3NqbXdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE2NTU0NTksImV4cCI6MjAzNzIzMTQ1OX0.KSLigwZUBqG3Yl4OfTSKeZlPmFlLltU8-14Fnt_byJM',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5dW51a3ZhcGFibGhld3NqbXdiIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyMTY1NTQ1OSwiZXhwIjoyMDM3MjMxNDU5fQ.vB9HaAlcsidn2wlXJ62SOAllQKGBZRq1jOSHt5S7Z18',
       },
       params: {},
       body: ffApiRequestBody,

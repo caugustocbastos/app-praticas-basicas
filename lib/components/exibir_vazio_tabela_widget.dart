@@ -28,7 +28,7 @@ class _ExibirVazioTabelaWidgetState extends State<ExibirVazioTabelaWidget> {
     super.initState();
     _model = createModel(context, () => ExibirVazioTabelaModel());
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override

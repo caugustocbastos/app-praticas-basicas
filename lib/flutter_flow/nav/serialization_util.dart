@@ -220,10 +220,22 @@ dynamic deserializeParam<T>(
         switch (T) {
           case DiarioRow:
             return DiarioRow(data);
+          case DiarioResumoSemanalRow:
+            return DiarioResumoSemanalRow(data);
+          case DiarioResumoMesRow:
+            return DiarioResumoMesRow(data);
+          case GrupoRow:
+            return GrupoRow(data);
           case IgrejaRow:
             return IgrejaRow(data);
+          case GrupoPessoaRow:
+            return GrupoPessoaRow(data);
+          case LiderancaRow:
+            return LiderancaRow(data);
           case UnidadeRow:
             return UnidadeRow(data);
+          case VersaoappRow:
+            return VersaoappRow(data);
           case PessoaRow:
             return PessoaRow(data);
           default:

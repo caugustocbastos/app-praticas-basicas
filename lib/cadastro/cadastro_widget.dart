@@ -42,7 +42,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
     _model.passwordConfirmTextController ??= TextEditingController();
     _model.passwordConfirmFocusNode ??= FocusNode();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -264,7 +264,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                   .map((e) => e.nome)
                                                   .toList(),
                                           onChanged: (val) async {
-                                            setState(() => _model
+                                            safeSetState(() => _model
                                                 .ddIgrejaCadastroValue = val);
                                             _model.outUnidade =
                                                 await UnidadeTable().queryRows(
@@ -280,14 +280,14 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                                     desc: false)
                                                 .toList()
                                                 .cast<UnidadeRow>();
-                                            setState(() {});
-                                            setState(() {
+                                            safeSetState(() {});
+                                            safeSetState(() {
                                               _model
                                                   .ddUnidadeCadastroValueController
                                                   ?.reset();
                                             });
 
-                                            setState(() {});
+                                            safeSetState(() {});
                                           },
                                           width: 370.0,
                                           height: 56.0,
@@ -357,7 +357,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                           .map((e) => e.nome)
                                           .withoutNulls
                                           .toList(),
-                                      onChanged: (val) => setState(() =>
+                                      onChanged: (val) => safeSetState(() =>
                                           _model.ddUnidadeCadastroValue = val),
                                       width: 370.0,
                                       height: 56.0,
@@ -552,7 +552,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                               FlutterFlowTheme.of(context)
                                                   .primaryBackground,
                                           suffixIcon: InkWell(
-                                            onTap: () => setState(
+                                            onTap: () => safeSetState(
                                               () => _model.passwordVisibility =
                                                   !_model.passwordVisibility,
                                             ),
@@ -651,7 +651,7 @@ class _CadastroWidgetState extends State<CadastroWidget> {
                                               FlutterFlowTheme.of(context)
                                                   .primaryBackground,
                                           suffixIcon: InkWell(
-                                            onTap: () => setState(
+                                            onTap: () => safeSetState(
                                               () => _model
                                                       .passwordConfirmVisibility =
                                                   !_model
